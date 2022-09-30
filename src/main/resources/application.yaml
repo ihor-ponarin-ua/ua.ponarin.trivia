@@ -1,0 +1,7 @@
+ws:
+  config:
+    handshakeEndpoint: /ws/trivia
+    brokerPrefix: /ws/topic
+    applicationDestinationPrefix: /ws/app
+  topic:
+    players: ${ws.config.brokerPrefix}/players
