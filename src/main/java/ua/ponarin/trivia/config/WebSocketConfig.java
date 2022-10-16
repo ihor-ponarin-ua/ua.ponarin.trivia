@@ -9,8 +9,6 @@ import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
-import org.springframework.messaging.support.MessageHeaderAccessor;
-import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
@@ -33,6 +31,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry
                 .addEndpoint(handshakeEndpoint)
+                .setAllowedOriginPatterns("*")
                 .withSockJS();
     }
 
@@ -47,15 +46,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registration.interceptors(new ChannelInterceptor() {
             @Override
             public Message<?> preSend(Message<?> message, MessageChannel channel) {
-                StompHeaderAccessor accessor =
-                        MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
+                var accessor = StompHeaderAccessor.wrap(message);
                 if (StompCommand.CONNECT.equals(accessor.getCommand())) {
-                    var token = message
-                            .getHeaders()
-                            .get("nativeHeaders", LinkedMultiValueMap.class)
-                            .get("token")
-                            .get(0)
-                            .toString();
+                    var token = accessor.getFirstNativeHeader("token");
                     var userId = JwtUtils.parseClaim("userId", Long.class, token);
                     accessor.setUser(new CustomPrincipal(userId.toString()));
                 }

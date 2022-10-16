@@ -9,3 +9,5 @@
 - https://resultfor.dev/592243-passing-jwt-token-to-sockjs
 - https://stackoverflow.com/questions/30887788/json-web-token-jwt-with-spring-based-sockjs-stomp-web-socket
 - https://www.anycodings.com/1questions/5688385/passing-jwt-token-to-sockjs
+- https://rotadev.com/json-web-token-jwt-with-spring-based-sockjs-stomp-web-socket-dev/
+- https://www.devglan.com/spring-cloud/spring-cloud-gateway-websockets
