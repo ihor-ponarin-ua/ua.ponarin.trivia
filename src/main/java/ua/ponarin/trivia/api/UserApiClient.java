@@ -11,6 +11,6 @@ import javax.validation.constraints.NotBlank;
 @FeignClient(name = "userApiClient", url = "${api.users}")
 @Validated
 public interface UserApiClient {
-    @GetMapping("/users/{id}")
-    User getById(@NotBlank @PathVariable String id);
+    @GetMapping("/v1/users/{id}")
+    User findById(@NotBlank @PathVariable String id);
 }

@@ -6,7 +6,10 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class Player {
-    private String name;
+    private Long id;
+    private String login;
+    private String firstName;
+    private String lastName;
     private VoteStatus voteStatus = VoteStatus.IN_PROGRESS;
 
     private enum VoteStatus {
